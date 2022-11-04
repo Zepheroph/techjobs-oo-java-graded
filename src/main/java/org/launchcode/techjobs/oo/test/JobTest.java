@@ -27,12 +27,17 @@ public class JobTest {
         }
 //write tests. ensure they run. upload and submit
         @Test
-        public void testJobId(){
-                assertNotEquals("String1","String2");
+        public void testSettingJobId(){
+                assertNotEquals(job1.getId(),job2.getId());
         }
 
         @Test
         public void testJobConstructorSetsAllFields(){
+                assertTrue(job3.getName() instanceof String);
+                assertTrue(job3.getEmployer() instanceof Employer);
+                assertTrue(job3.getLocation() instanceof Location);
+                assertTrue(job3.getPositionType() instanceof PositionType);
+                assertTrue(job3.getCoreCompetency() instanceof CoreCompetency);
                 assertEquals(job3.getName(), "Product tester");
                 assertEquals(job3.getEmployer().getValue(), "ACME");
                 assertEquals(job3.getLocation().getValue(), "Desert");
@@ -44,14 +49,25 @@ public class JobTest {
 
         @Test
         public void testJobsForEquality(){
-                assertTrue(job4.getEmployer() instanceof Employer);
-                assertTrue(job4.getLocation() instanceof Location);
-                assertTrue(job4.getPositionType() instanceof PositionType);
-                assertTrue(job4.getCoreCompetency() instanceof CoreCompetency);
+                Job job3a = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+                assertFalse(job3.equals(job3a));
+
+
+
+//                assertTrue(job4.getEmployer() instanceof Employer);
+//                assertTrue(job4.getLocation() instanceof Location);
+//                assertTrue(job4.getPositionType() instanceof PositionType);
+//                assertTrue(job4.getCoreCompetency() instanceof CoreCompetency);
         }
 
         @Test
-        public void toStringPrintsCorrect(){
+        public void testToStringStartsAndEndsWithNewLine(){
+                assertEquals('\n',job5.toString().charAt(0));
+                assertEquals('\n',job5.toString().charAt(job5.toString().length()-1));
+        }
+
+        @Test
+        public void testToStringContainsCorrectLabelsAndData(){
              String   output = String.format(
                 "\nID: %d\n" +
                 "Name: %s\n" +
@@ -60,22 +76,6 @@ public class JobTest {
                 "Position Type: %s\n" +
                 "Core Competency: %s\n", job3.getId(),job3.getName(),job3.getEmployer(),job3.getLocation(),job3.getPositionType(),job3.getCoreCompetency());
         assertEquals(output, job3.toString());
-        }
-
-        @Test
-        public void testToStringContainsCorrectLabelsAndData(){
-                assertTrue(job5.toString().contains("ID: "));
-                assertTrue(job5.toString().contains("Name: "));
-                assertTrue(job5.toString().contains("Employer: "));
-                assertTrue(job5.toString().contains("Location: "));
-                assertTrue(job5.toString().contains("Position Type: "));
-                assertTrue(job5.toString().contains("Core Competency: "));
-        }
-
-        @Test
-        public void testToStringStartsAndEndsWithNewLine(){
-                assertEquals('\n',job5.toString().charAt(0));
-                assertEquals('\n',job5.toString().charAt(job5.toString().length()-1));
         }
 
         @Test
